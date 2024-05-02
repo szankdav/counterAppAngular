@@ -1,6 +1,7 @@
 FROM node:latest AS build
 WORKDIR /counterAppAngular
 RUN npm cache clean --force
+COPY package*.json ./
 RUN npm install
 COPY . .
 RUN npm run build --prod
