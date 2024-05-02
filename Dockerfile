@@ -2,7 +2,7 @@ FROM node:latest AS build
 WORKDIR /counterAppAngular
 RUN npm cache clean --force
 COPY . .
-RUN npm ci
+RUN npm run install
 RUN npm run build
 
 FROM nginx:latest AS ngi
