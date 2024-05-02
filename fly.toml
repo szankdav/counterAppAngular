@@ -1,44 +1,22 @@
-worker_processes 1;
+# fly.toml app configuration file generated for counterappangular on 2024-04-30T12:25:04+02:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
+app = "counterappangular"
+[build]
+  dockerfile = "Dockerfile"
+primary_region = "ams"
 
-events {
-    worker_connections 1024;
-}
+[http_service]
+  auto_start_machines = true
+  auto_stop_machines = true
+  force_https = true
+  internal_port = 8080
+  min_machines_running = 0
+  processes = [ "app" ]
 
-
-http {
-    server {
-        listen 8080;
-        server_name localhost;
-
-
-        root /usr/share/nginx/html;
-        index index.html index.html;
-        include /etc/nginx/mime.types;
-
-
-        gzip on;
-        gzip_http_version 1.1;
-        gzip_disable      "MSIE [1-6]\.";
-        gzip_min_length   256;
-        gzip_vary         on;
-        gzip_proxied      expired no-cache no-store private auth;
-        gzip_types        text/plain text/css application/json application/javascript application/x-javascript text/xml application/xml application/xml+rss text/javascript;
-        gzip_comp_level   9;
-
-
-        # location ~* \.(eot|ttf|woff|woff2|js|json)$ {
-        #     add_header Access-Control-Allow-Origin *;
-        # }
-
-
-        # location ~ \.js {
-        #     add_header Content-Type application/x-javascript;
-        # }
-
-
-        location / {
-            try_files $uri $uri/ /index.html;
-        }
-    }
-}
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory = "1gb"
